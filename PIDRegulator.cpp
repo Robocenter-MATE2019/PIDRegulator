@@ -9,7 +9,7 @@ PIDRegulator::PIDRegulator(float pK, float iK, float dK)
 
 int PIDRegulator::apply(float to_set, float current)
 {
-	if (m_timer.isStarted())
+	if (m_timer.is_started())
 	{
 		m_timer.start();
 	}
