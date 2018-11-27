@@ -5,15 +5,13 @@ PIDRegulator::PIDRegulator(float pK, float iK, float dK)
 	m_pK = pK;
 	m_dK = dK;
 	m_iK = iK;
-	m_timer.start();
 }
 
 int PIDRegulator::apply(float to_set, float current)
 {
-	if (is_first)
+	if (m_timer.isStarted())
 	{
 		m_timer.start();
-		is_first = false;
 	}
 	float result;
 	float integral_part;
