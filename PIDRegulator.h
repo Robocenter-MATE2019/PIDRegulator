@@ -19,6 +19,5 @@ private:
 	float m_pK = 0;
 	float m_dK = 0;
 	float m_iK = 0;
-	bool is_first = true;
 	Timer m_timer;
 };
