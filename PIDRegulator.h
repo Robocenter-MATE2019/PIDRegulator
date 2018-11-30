@@ -7,8 +7,8 @@ class PIDRegulator
 {
 
 public:
-	PIDRegulator(float pK, float dK, float iK);
-	void set_k(float pK, float dK, float iK);
+	PIDRegulator(float pK, float dK, float iK); // неправильный порядок аргументов
+	void set_k(float pK, float dK, float iK); // неправильный порядок аргументов
 	int apply(float to_set, float current);
 	void set_pk(float pk);
 	void set_ik(float ik);
