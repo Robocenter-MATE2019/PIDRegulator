@@ -18,12 +18,12 @@ int PIDRegulator::apply(float to_set, float current)
 	float proportional_part;
 	float differential_part;
 	float time_elaplsed = (m_timer.elapsed() / 1000.00) < 0.0000001 ? m_timer.elapsed() / 1000.00 + 0.000001 : m_timer.elapsed() / 1000.00;
-
+	//строчка выше стремная, переработать.
 	m_timer.stop();
 
 	float error = to_set - current;
 
-	m_integral += error * time_elaplsed;
+	m_integral += error * time_elaplsed; // мы же договорились о ограничивании интеграла
 
 	proportional_part = m_pK * error;
 
