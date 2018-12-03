@@ -5,25 +5,27 @@ PIDRegulator::PIDRegulator(float pK, float iK, float dK)
 	m_pK = pK;
 	m_dK = dK;
 	m_iK = iK;
+	m_timer.start();
 }
 
 int PIDRegulator::apply(float to_set, float current)
 {
-	if (m_timer.is_started())
+	if (is_first)
 	{
 		m_timer.start();
+		is_first = false;
 	}
 	float result;
 	float integral_part;
 	float proportional_part;
 	float differential_part;
-	float time_elaplsed = (m_timer.elapsed() / 1000.00) < 0.0000001 ? m_timer.elapsed() / 1000.00 + 0.000001 : m_timer.elapsed() / 1000.00;
-	//строчка выше стремная, переработать.
+	float time_elaplsed = (m_timer.elapsed() / 1000.00) < 0.0000001 ?  0.000001 : m_timer.elapsed() / 1000.00;
+
 	m_timer.stop();
 
 	float error = to_set - current;
 
-	m_integral += error * time_elaplsed; // мы же договорились о ограничивании интеграла
+	m_integral = constrain(error * time_elaplsed + m_integral, -100, 100);
 
 	proportional_part = m_pK * error;
 
@@ -40,12 +42,12 @@ int PIDRegulator::apply(float to_set, float current)
 	return result;
 }
 
-void PIDRegulator::set_k(float pK, float dK, float iK)
+void PIDRegulator::set_k(float pK, float iK, float dK)
 {
 
 	m_pK = pK;
-	m_dK = dK;
-	m_iK = iK;
+	m_dK = iK;
+	m_iK = dK;
 }
 
 void PIDRegulator::set_pk(float pK)
